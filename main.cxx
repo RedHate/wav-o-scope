@@ -1,10 +1,12 @@
 /*
  * RedHate's 3d scope project feb 2021
+ * Using Wizardyesterday's DspBuildingBlocks! :D
  */
 
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <pthread.h>
 #include <GL/gl.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_main.h>
@@ -40,6 +42,9 @@ typedef struct vertex_tcnv{
                 v;
 } vertex_tcnv;
 
+static bool running 	= true;
+vertex_tcnv obj[MAX];
+
 bool IsKeyDown( SDL_Keycode k ){
     int numKeys;
     static const Uint8* kb_keys = NULL;
@@ -56,12 +61,6 @@ static void Perspective(float yfov, float aspect, float znear, float zfar){
     glFrustum(xmin,xmax,ymin,ymax,znear,zfar); //glFrustumf
 }
 
-static bool running 	= true;
-
-vertex_tcnv obj[MAX];
-
-#include <pthread.h>
-//this function is the second thread
 void *update(void *argv){
 
     printf("Update thread initializing\r\n");
