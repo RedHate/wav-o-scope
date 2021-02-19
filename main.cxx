@@ -137,7 +137,9 @@ int main(int argc, char** argv){
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     glScissor(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-	float zoom = 100.0f;
+    glLineWidth(2.5f);
+
+    float zoom = 100.0f;
 
     pthread_t update_thread;
     if(pthread_create(&update_thread, NULL, &update, NULL)) {
