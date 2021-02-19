@@ -60,6 +60,7 @@ static void Perspective(float yfov, float aspect, float znear, float zfar){
     xmax = ymax * aspect;
     glFrustum(xmin,xmax,ymin,ymax,znear,zfar); //glFrustumf
 }
+
 void *update(void *argv){
 
 	printf("Update thread initializing\r\n");
