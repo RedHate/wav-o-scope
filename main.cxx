@@ -60,55 +60,54 @@ static void Perspective(float yfov, float aspect, float znear, float zfar){
     xmax = ymax * aspect;
     glFrustum(xmin,xmax,ymin,ymax,znear,zfar); //glFrustumf
 }
-
 void *update(void *argv){
 
-    printf("Update thread initializing\r\n");
-    
+	printf("Update thread initializing\r\n");
+
 	int16_t sample;
 	float floatSample;
 	float iValue, qValue;
 	Nco *ncoPtr = new Nco(RATE,atof("980.0f"));
 	int r=1,g=0,b=1;
-    
-    while(running){
-		
+
+	while(running){
+
 		int i;
 		for (i=0;i<MAX;i++){
 
 			//tone A mutation
 			ncoPtr->run(&iValue,&qValue);
 			floatSample = iValue;
-			
+
 			//count
 			floatSample *= MAX-1;
 			floatSample /= 1;
-			
+
 			if(r) r=0; else r=1;
 			if(g) g=0; else g=1;
 			if(b) b=0; else b=1;
-			
+
 			obj[i] = { 1, 1, {r,g,b,1}, 0,  0,  1,   i*10,   floatSample/500.0f,   0 };
 
 			//cast it to the correct type..
 			sample = (int16_t)floatSample;
-			
+
 			//write it to stdout to be picked up with: scope | aplay -f s16_le -r 24000
 			//fwrite(&sample,sizeof(int16_t),1,stdout); //absolutely fucking gags the program lol
 
 		}
-    }
+	}
 
 	delete ncoPtr;
 
-    return NULL;
+	return NULL;
 }
 
 int main(int argc, char** argv){
 
-	//some for the window
-	int WINDOW_WIDTH  		= 854;
-	int WINDOW_HEIGHT 		= 128;
+    //some for the window
+    int WINDOW_WIDTH  		= 854;
+    int WINDOW_HEIGHT 		= 128;
     int fullscreen = 0;
 	 
     //init sdl
